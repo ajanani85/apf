@@ -1,0 +1,104 @@
+#include <ros/ros.h>
+#include <iostream>
+#include <sstream>
+#include <nav_msgs/Odometry.h>
+#include <sensor_msgs/LaserScan.h>
+
+using namespace std;
+
+int robot_id = 0;
+string robot_name;
+float cpX, cpY;
+struct pose
+{
+	float x;
+	float y;
+};
+
+
+
+ros::Publisher reach_point_pub;
+
+
+class Mapper
+{
+	public:
+		Mapper();
+	private:
+		//a normal node handle for general tasks
+		ros::NodeHandle n;
+		ros::Subscriber pose_sub;
+		ros::Subscriber laser_sub;
+		
+		void laserCB(const sensor_msgs::LaserScan::ConstPtr &laser);
+		void poseCB(const nav_msgs::Odometry::ConstPtr &pose);
+		
+};
+
+Mapper::Mapper()
+{
+	//a private node handle for collecting parameters
+	ros::NodeHandle nh("~");
+	ostringstream ss;
+	nh.getParam("robot_id",robot_id);
+	ss << "robot_";
+	ss << robot_id;
+	robot_name = ss.str();
+	string pose_pipename = robot_name+"/base_pose_ground_truth";
+	string laser_pipename = robot_name+"/base_scan";
+	pose_sub = n.subscribe<nav_msgs::Odometry>(pose_pipename,10,&Mapper::poseCB,this);	
+	laser_sub = n.subscribe<sensor_msgs::LaserScan>(laser_pipename,10,&Mapper::laserCB,this);	
+}
+void Mapper::poseCB(const nav_msgs::Odometry::ConstPtr &pose)
+{
+	cpX = pose->pose.pose.position.x;
+	cpY = pose->pose.pose.position.y;
+}
+void Mapper::laserCB(const sensor_msgs::LaserScan::ConstPtr &laser)
+{
+	/*float cRight[128], pRight[128], cFront[128], pFront[128];
+	pose obj[256];
+	
+	for (int i=0; i<=127; i++)
+	{
+		cRight[i] = laser->ranges[i];
+	}
+	for (int i=191; i<=319; i++)
+	{
+		cFront[i] = laser->ranges[i];
+	}*/
+	
+	//The following snipets obtaines the number of objects in one laser scan.
+	float curReading[512][512];
+	ROS_INFO("--------------------------------");	
+	int objCount = 0;
+	for (int i=0; i<=511; i++)
+	{
+		if (laser->ranges[i] < 4.5 && i > 0)
+		{
+			if (laser->ranges[i-1] < 4.5)
+			{
+				curReading[objCount][i] = laser->ranges[i];
+			}
+			else
+			{
+				objCount++;
+				curReading[objCount][i] = laser->ranges[i];
+			}
+		}
+		else if (laser->ranges[i] < 4.5 && i == 0)
+		{
+			objCount++;
+			curReading[objCount][i] = laser->ranges[i];
+		}
+		
+	}
+	ROS_INFO("Found %d objects",objCount);*/
+}
+int main(int argc, char **argv)
+{
+	ros::init(argc,argv,"mapper");
+	Mapper mp;
+	ros::spin();
+	return 0;
+}

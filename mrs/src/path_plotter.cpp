@@ -1,0 +1,183 @@
+#include <ros/ros.h>
+#include <nav_msgs/Odometry.h>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <pthread.h>
+
+#define radius 7
+
+using namespace std;
+using namespace cv;
+
+Point2f r1,r2,r3,r4,pr1;
+
+pthread_t plot_thread;
+void* plot(void *thread_id);
+
+class PlotterClass
+{
+public:
+	PlotterClass();
+private:
+	ros::NodeHandle nh;	
+	ros::Subscriber r0_pose_sub;
+	ros::Subscriber r1_pose_sub;
+	ros::Subscriber r2_pose_sub;
+	ros::Subscriber r3_pose_sub;
+	ros::Subscriber r4_pose_sub;
+	ros::Subscriber r5_pose_sub;
+	ros::Subscriber r6_pose_sub;
+	ros::Subscriber r7_pose_sub;
+	ros::Subscriber r8_pose_sub;
+	ros::Subscriber r9_pose_sub;
+	ros::Subscriber r10_pose_sub;
+	ros::Subscriber r11_pose_sub;
+	ros::Subscriber r12_pose_sub;
+	ros::Subscriber r13_pose_sub;
+	ros::Subscriber r14_pose_sub;
+	ros::Subscriber r15_pose_sub;
+	ros::Subscriber r16_pose_sub;
+	ros::Subscriber r17_pose_sub;
+	ros::Subscriber r18_pose_sub;
+	ros::Subscriber r19_pose_sub;
+
+	void r0PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r1PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r2PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r3PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r4PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r5PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r6PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r7PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r8PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r9PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r10PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r11PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r12PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r13PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r14PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r15PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r16PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r17PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r18PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+	void r19PoseCallback(const nav_msgs::Odometry::ConstPtr &odom);
+};
+
+PlotterClass::PlotterClass()
+{
+	r0_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_0/base_pose_ground_truth",5,&PlotterClass::r0PoseCallback,this);
+	r1_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_1/base_pose_ground_truth",5,&PlotterClass::r1PoseCallback,this);
+	r2_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_2/base_pose_ground_truth",5,&PlotterClass::r2PoseCallback,this);
+	r3_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_3/base_pose_ground_truth",5,&PlotterClass::r3PoseCallback,this);
+	r4_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_4/base_pose_ground_truth",5,&PlotterClass::r4PoseCallback,this);
+	r5_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_5/base_pose_ground_truth",5,&PlotterClass::r5PoseCallback,this);
+	r6_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_6/base_pose_ground_truth",5,&PlotterClass::r6PoseCallback,this);
+	r7_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_7/base_pose_ground_truth",5,&PlotterClass::r7PoseCallback,this);
+	r8_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_8/base_pose_ground_truth",5,&PlotterClass::r8PoseCallback,this);
+	r9_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_9/base_pose_ground_truth",5,&PlotterClass::r9PoseCallback,this);
+	r10_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_10/base_pose_ground_truth",5,&PlotterClass::r10PoseCallback,this);
+	r11_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_11/base_pose_ground_truth",5,&PlotterClass::r11PoseCallback,this);
+	r12_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_12/base_pose_ground_truth",5,&PlotterClass::r12PoseCallback,this);
+	r13_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_13/base_pose_ground_truth",5,&PlotterClass::r13PoseCallback,this);
+	r14_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_14/base_pose_ground_truth",5,&PlotterClass::r14PoseCallback,this);
+	r15_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_15/base_pose_ground_truth",5,&PlotterClass::r15PoseCallback,this);
+	r16_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_16/base_pose_ground_truth",5,&PlotterClass::r16PoseCallback,this);
+	r17_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_17/base_pose_ground_truth",5,&PlotterClass::r17PoseCallback,this);
+	r18_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_18/base_pose_ground_truth",5,&PlotterClass::r18PoseCallback,this);
+	r19_pose_sub = nh.subscribe<nav_msgs::Odometry>("robot_19/base_pose_ground_truth",5,&PlotterClass::r19PoseCallback,this);
+}
+
+void PlotterClass::r0PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r1PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r2PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r3PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r4PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r5PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r6PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r7PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r8PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r9PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r10PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r11PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r12PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r13PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r14PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r15PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r16PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r17PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r18PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void PlotterClass::r19PoseCallback(const nav_msgs::Odometry::ConstPtr &odom)
+{
+
+}
+void *plot(void *thread_id)
+{
+	while(1)
+	{
+		
+	}
+}
+int main(int argc, char** argv)
+{
+	ros::init(argc,argv,"path_plotter");
+	pthread_create(&plot_thread,NULL,plot, (void *)1);
+	ros::spin();
+	return 0;
+}

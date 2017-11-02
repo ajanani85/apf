@@ -1,0 +1,36 @@
+#include <ros/ros.h>
+#include <iostream>
+#include <nav_msgs/Odometry.h>
+using namespace std;
+
+int robot_id = 0;
+string robot_name, node_name;
+
+class THClass
+{
+	public:
+		THClass();
+	private:
+		ros::NodeHandle nh;
+		ros::Subscriber pose_sub;
+		void poseCB(const nav_msgs::Odometry::ConstPtr &pose);
+};
+
+THClass::THClass()
+{
+	pose_sub = nh.subscribe<nav_msgs::Odometry>(node_name+"/base_pose_ground_truth",10,&THClass::poseCB,this);
+	
+}
+void THClass::poseCB(const nav_msgs::Odometry::ConstPtr &pose)
+{
+	
+}
+int main(int argc, char **argv)
+{
+	robot_name = "robot_"+robot_id;
+	node_name = "th_"+robot_id;
+	ros::init(argc,argv,node_name.c_str());
+	THClass th;
+	ros::spin();
+	return 0;
+}

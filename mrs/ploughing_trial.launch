@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="robot_id"/>
+	<node name="th_4" pkg="mrs" type="task_handler" output="screen">
+		<param name="robot_id" type="int" value="4"/>
+	</node>
+	<node name="rp_4" pkg="mrs" type="reach_point" output="screen">
+		<param name="robot_id" type="int" value="4"/>
+	</node>
+
+<!-- Reach points -->
+	<node name="th_14" pkg="mrs" type="task_handler" output="screen">
+		<param name="robot_id" type="int" value="14"/>
+	</node>
+	<node name="rp_14" pkg="mrs" type="reach_point" output="screen">
+		<param name="robot_id" type="int" value="14"/>
+	</node>
+	<node name="reference" pkg="ploughing_reversible" type="reference"/>
+</launch>
