@@ -1,0 +1,124 @@
+window
+(
+  size [ 1231 1000 ] # in pixels
+  scale 21.436  # pixels per meter
+  rotate [ 0.000  -0.500]
+	
+  show_data 1              # 1=on 0=off
+)
+
+
+define block model
+(
+ size [1 2 0.5]
+ gui_nose 0
+)
+
+
+define hokuyo ranger
+(
+ sensor(
+  range [0.0 4.5]
+  fov 180.0
+  samples 512
+ )
+ color "black"
+ size [0.050 0.050 0.100]
+) 
+ 
+define cam camera
+(
+	blobfinder
+	(
+		#number of colours to look for
+		channels_count 2
+		# camera parameters
+		image [800 800] #resolution
+		resolution [800 800]
+		range_max 15.00
+		ptz [0 0 60]
+	)
+)
+define erratic position
+(
+ #size [0.415 0.392 0.25]
+ size [0.508 0.497 0.277]
+ origin [-0.050 0.000 0.000 0.000]
+ gui_nose 1
+ drive "diff"
+ hokuyo(pose [0.050 0.000 -0.100 0.000])
+ cam(pose [0.100 0.000 0.090 0.000])
+)
+define floorplan model
+(
+  # sombre, sensible, artistic
+  color "gray30"
+	
+  # most maps will need a bounding box
+  boundary 1
+	size [80.000 80.000 0.0]
+  gui_nose 0
+  gui_grid 1
+  gui_move 0
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+  ranger_return 1
+)
+
+
+
+# load an environment bitmap
+#floorplan
+#( 
+#  name "erratic-laser"
+#  size [20.000 15.000 0.800]
+#  pose [0 0 0 0]
+#  bitmap "alireza-map-one.png"
+#)
+
+erratic(pose [20.48 8.28 0.000 -50.21] name "era0" color "blue")
+erratic(pose [17.95 8.08 0.000 -50.95] name "era1" color "blue")
+erratic(pose [19.00 8.56 0.000 -50.68] name "era2" color "blue")
+erratic(pose [17.88 5.58 0.000 -50.30] name "era3" color "blue")
+erratic(pose [20.63 6.45 0.000 -49.11] name "era4" color "blue")
+erratic(pose [19.02 6.51 0.000 -50.45] name "era5" color "blue")
+erratic(pose [15.81 6.59 0.000 -50.57] name "era6" color "blue")
+erratic(pose [17.04 7.31 0.000 -49.73] name "era7" color "blue")
+erratic(pose [18.39 10.42 0.000 -0.000] name "era8" color "blue")
+erratic(pose [16.60 8.86 0.000 79.85] name "era9" color "blue")
+erratic(pose [19.92 10.31 0.000 -93.52] name "era10" color "blue")
+erratic(pose [21.85 9.76 0.000 -168.01] name "era11" color "blue")
+erratic(pose [21.54 11.14 0.000 -62.01] name "era12" color "blue")
+#erratic(pose [23.26 11.18 0.000 -133.63] name "era13" color "blue")
+#erratic(pose [24.69 11.46 0.000 -41.96] name "era14" color "blue")
+#erratic(pose [24.55 12.81 0.000 -142.22] name "era15" color "blue")
+#erratic(pose [23.40 13.36 0.000 -170.87] name "era16" color "blue")
+#erratic(pose [25.19 13.85 0.000 -16.17] name "era17" color "blue")
+#erratic(pose [22.01 13.80 0.000 -47.69] name "era18" color "blue")
+#erratic(pose [23.64 15.04 0.000 -104.98] name "era19" color "blue")
+
+#Sample of robot position if all robots are in the same side
+#erratic(pose [20.48 8.28 0.000 -50.21] name "era0" color "blue")
+#erratic(pose [17.95 8.08 0.000 -50.95] name "era1" color "blue")
+#erratic(pose [19.00 8.56 0.000 -50.68] name "era2" color "blue")
+#erratic(pose [17.88 5.58 0.000 -50.30] name "era3" color "blue")
+#erratic(pose [20.63 6.45 0.000 -49.11] name "era4" color "blue")
+#erratic(pose [19.02 6.51 0.000 -50.45] name "era5" color "blue")
+#erratic(pose [15.81 6.59 0.000 -50.57] name "era6" color "blue")
+#erratic(pose [17.04 7.31 0.000 -49.73] name "era7" color "blue")
+#erratic(pose [18.39 10.42 0.000 -0.000] name "era8" color "blue")
+#erratic(pose [16.60 8.86 0.000 79.85] name "era9" color "blue")
+#erratic(pose [19.92 10.31 0.000 -93.52] name "era10" color "blue")
+#erratic(pose [21.85 9.76 0.000 -168.01] name "era11" color "blue")
+#erratic(pose [21.54 11.14 0.000 -62.01] name "era12" color "blue")
+#erratic(pose [23.26 11.18 0.000 -133.63] name "era13" color "blue")
+#erratic(pose [24.69 11.46 0.000 -41.96] name "era14" color "blue")
+#erratic(pose [24.55 12.81 0.000 -142.22] name "era15" color "blue")
+#erratic(pose [23.40 13.36 0.000 -170.87] name "era16" color "blue")
+#erratic(pose [25.19 13.85 0.000 -16.17] name "era17" color "blue")
+#erratic(pose [22.01 13.80 0.000 -47.69] name "era18" color "blue")
+#erratic(pose [23.64 15.04 0.000 -104.98] name "era19" color "blue")
+
+
+

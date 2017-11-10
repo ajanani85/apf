@@ -1,0 +1,138 @@
+window
+(
+  size [ 1317 744 ] # in pixels
+  scale 6.830  # pixels per meter
+  rotate [ 3.500 0.000]
+  show_data 1              # 1=on 0=off
+)
+
+
+define block model
+(
+ size [1.000 2.000 0.500]
+ gui_nose 0
+)
+define blockT model
+(
+ size [0.500 20.000 0.500]
+ gui_nose 0
+)
+
+define hokuyo ranger
+(
+ sensor(
+  range [0.0 4.5]
+  fov 180.0
+  samples 512
+ )
+ color "black"
+ size [0.050 0.050 0.100]
+) 
+define erratic position
+(
+ #size [0.415 0.392 0.25]
+ size [0.508 0.497 0.277]
+ origin [-0.050 0.000 0.000 0.000]
+ gui_nose 1
+ drive "diff"
+ hokuyo(pose [0.050 0.000 -0.100 0.000])
+)
+define floorplan model
+(
+  # sombre, sensible, artistic
+  color "gray30"
+	
+  # most maps will need a bounding box
+  boundary 1
+	size [80.000 80.000 0.0]
+  gui_nose 0
+  gui_grid 1
+  gui_move 0
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+  ranger_return 1.000
+)
+
+# load an environment bitmap
+#floorplan
+#( 
+#  name "erratic-laser"
+#  size [111.900 103.900 0.800]
+#  pose [0.000 0.000 0.000 0.000]
+#  bitmap "alireza-map-one.png"
+#)
+
+erratic(pose [49.371 -43.182 0.000 -96.721] name "robot_0" color "blue")
+erratic(pose [11.108 -48.944 0.000 -38.336] name "robot_1" color "blue")
+erratic(pose [20.407 -39.593 0.000 -98.534] name "robot_2" color "blue")
+erratic(pose [56.736 -39.682 0.000 -93.101] name "robot_3" color "blue")
+erratic(pose [23.901 -54.617 0.000 -168.671] name "robot_4" color "blue")
+erratic(pose [57.085 -49.840 0.000 -112.092] name "robot_5" color "blue")
+erratic(pose [44.989 -54.602 0.000 33.378] name "robot_6" color "blue")
+erratic(pose [29.721 -43.482 0.000 20.810] name "robot_7" color "blue")
+erratic(pose [7.867 -43.264 0.000 36.531] name "robot_8" color "blue")
+erratic(pose [31.716 -38.152 0.000 -76.222] name "robot_9" color "blue")
+erratic(pose [37.152 -48.390 0.000 -122.586] name "robot_10" color "blue")
+erratic(pose [27.412 -44.262 0.000 -1.996] name "robot_11" color "blue")
+erratic(pose [19.018 -49.327 0.000 -64.783] name "robot_12" color "blue")
+erratic(pose [26.445 -52.128 0.000 -110.708] name "robot_13" color "blue")
+erratic(pose [26.523 -39.753 0.000 -102.945] name "robot_14" color "blue")
+erratic(pose [26.994 -50.049 0.000 133.999] name "robot_15" color "blue")
+erratic(pose [20.168 -45.702 0.000 -134.390] name "robot_16" color "blue")
+erratic(pose [41.930 -45.381 0.000 -126.755] name "robot_17" color "blue")
+erratic(pose [32.112 -47.149 0.000 164.565] name "robot_18" color "blue")
+erratic(pose [42.640 -39.780 0.000 -5.450] name "robot_19" color "blue")
+block( pose [ 37.421 -28.676 0.000 -90.482 ] color "red")
+block( pose [ 24.470 -32.150 0.000 90.000 ] color "red")
+block( pose [ 37.537 -26.440 0.000 90.000 ] color "red")
+block( pose [ 16.218 -1.271 0.000 -178.327 ] color "red")
+block( pose [ 31.302 -33.189 0.000 -90.481 ] color "red")
+block( pose [ 40.761 -29.863 0.000 90.000 ] color "red")
+block( pose [ 16.055 2.928 0.000 -178.327 ] color "red")
+block( pose [ 38.541 -27.536 0.000 90.000 ] color "red")
+block( pose [ 21.420 -33.191 0.000 -90.482 ] color "red")
+block( pose [ 16.135 0.841 0.000 -178.327 ] color "red")
+block( pose [ 25.784 -33.288 0.000 -90.481 ] color "red")
+block( pose [ 23.593 -33.237 0.000 90.000 ] color "red")
+block( pose [ 40.760 -32.060 0.000 90.000 ] color "red")
+block( pose [ 36.555 -29.841 0.000 -90.482 ] color "red")
+block( pose [ 12.108 -33.302 0.000 -90.482 ] color "red")
+block( pose [ 34.400 -29.839 0.000 -90.482 ] color "red")
+block( pose [ 41.807 -30.987 0.000 90.000 ] color "red")
+block( pose [ 16.305 -33.301 0.000 90.000 ] color "red")
+block( pose [ 39.596 -28.740 0.000 -90.481 ] color "red")
+block( pose [ 14.215 -33.325 0.000 -90.482 ] color "red")
+block( pose [ -13.401 2.276 0.000 178.808 ] color "red")
+block( pose [ 32.495 -32.057 0.000 -90.481 ] color "red")
+block( pose [ 23.348 -30.822 0.000 90.000 ] color "red")
+block( pose [ 34.587 -32.059 0.000 90.000 ] color "red")
+block( pose [ 35.292 -28.683 0.000 -87.617 ] color "red")
+block( pose [ 12.142 -31.059 0.000 -87.617 ] color "red")
+block( pose [ 10.023 -33.324 0.000 89.999 ] color "red")
+block( pose [ 33.450 -30.977 0.000 90.000 ] color "red")
+block( pose [ 13.232 -29.745 0.000 90.000 ] color "red")
+block( pose [ 23.430 -29.086 0.000 -179.289 ] color "red")
+block( pose [ 22.321 -32.067 0.000 90.000 ] color "red")
+
+
+block( pose [ 38.648 -29.870 0.000 -90.482 ] color "red")
+block( pose [ 43.978 -33.142 0.000 90.000 ] color "red")
+block( pose [ 15.215 -32.221 0.000 90.000 ] color "red")
+block( pose [ 14.255 -31.108 0.000 90.000 ] color "red")
+block( pose [ 10.991 -32.179 0.000 90.000 ] color "red")
+block( pose [ -13.556 -2.340 0.000 -1.674 ] color "red")
+block( pose [ 36.455 -27.542 0.000 90.000 ] color "red")
+block( pose [ 13.123 -32.248 0.000 90.000 ] color "red")
+block( pose [ 41.878 -33.129 0.000 90.000 ] color "red")
+block( pose [ 39.700 -30.963 0.000 90.000 ] color "red")
+block( pose [ 35.559 -33.134 0.000 90.000 ] color "red")
+block( pose [ 36.666 -32.066 0.000 90.000 ] color "red")
+block( pose [ 33.380 -33.202 0.000 90.000 ] color "red")
+block( pose [ 42.915 -32.096 0.000 90.000 ] color "red")
+block( pose [ 37.682 -33.149 0.000 -90.482 ] color "red")
+block( pose [ 38.709 -32.054 0.000 90.000 ] color "red")
+block( pose [ 35.563 -30.990 0.000 90.000 ] color "red")
+block( pose [ -13.476 0.048 0.000 177.845 ] color "red")
+block( pose [ 39.785 -33.116 0.000 90.000 ] color "red")
+block( pose [ 37.663 -30.960 0.000 90.000 ] color "red")
